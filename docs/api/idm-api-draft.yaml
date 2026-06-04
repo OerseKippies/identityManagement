@@ -4,43 +4,44 @@ info:
   version: v1-draft
   description: Draft idM API for OK-Core review. Status DRAFT_IN_MODULE.
 servers:
-  - url: https://example.invalid/idm
+  - url: https://example.invalid
     description: Placeholder URL until deployment is assigned.
 tags:
+  - name: Health
   - name: Users
   - name: Roles
   - name: Permissions
+  - name: Assignments
   - name: ServiceAccounts
   - name: AccessPolicies
   - name: TokenReferences
 paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      responses:
+        '200':
+          description: Service is healthy
   /users:
+    post:
+      tags: [Users]
+      summary: Create user
+      requestBody:
+        $ref: '#/components/requestBodies/CreateUser'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/Conflict'
     get:
       tags: [Users]
       summary: List users
       responses:
         '200':
-          description: User list
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserListResponse'
-    post:
-      tags: [Users]
-      summary: Create user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserRequest'
-      responses:
-        '201':
-          description: User created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
+          description: Users
   /users/{userId}:
     get:
       tags: [Users]
@@ -49,31 +50,19 @@ paths:
         - $ref: '#/components/parameters/UserId'
       responses:
         '200':
-          description: User
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
+          $ref: '#/components/responses/UserResponse'
         '404':
           $ref: '#/components/responses/NotFound'
-    put:
+    patch:
       tags: [Users]
       summary: Update user
       parameters:
         - $ref: '#/components/parameters/UserId'
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
+        $ref: '#/components/requestBodies/UpdateUser'
       responses:
         '200':
-          description: User updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
+          $ref: '#/components/responses/UserResponse'
   /users/{userId}/disable:
     post:
       tags: [Users]
@@ -82,41 +71,102 @@ paths:
         - $ref: '#/components/parameters/UserId'
       responses:
         '200':
-          description: User disabled
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
+          $ref: '#/components/responses/UserResponse'
+  /users/{userId}/enable:
+    post:
+      tags: [Users]
+      summary: Enable user
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
+  /users/{userId}/lock:
+    post:
+      tags: [Users]
+      summary: Lock user
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
+  /users/{userId}/unlock:
+    post:
+      tags: [Users]
+      summary: Unlock user
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserResponse'
   /roles:
+    post:
+      tags: [Roles]
+      summary: Create role
+      requestBody:
+        $ref: '#/components/requestBodies/CreateRole'
+      responses:
+        '201':
+          $ref: '#/components/responses/RoleResponse'
     get:
       tags: [Roles]
       summary: List roles
       responses:
         '200':
-          description: Role list
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RoleListResponse'
+          description: Roles
+  /roles/{roleId}:
+    get:
+      tags: [Roles]
+      summary: Get role
+      parameters:
+        - $ref: '#/components/parameters/RoleId'
+      responses:
+        '200':
+          $ref: '#/components/responses/RoleResponse'
+    patch:
+      tags: [Roles]
+      summary: Update role
+      parameters:
+        - $ref: '#/components/parameters/RoleId'
+      responses:
+        '200':
+          $ref: '#/components/responses/RoleResponse'
+  /roles/{roleId}/disable:
     post:
       tags: [Roles]
-      summary: Create role
+      summary: Disable role
+      parameters:
+        - $ref: '#/components/parameters/RoleId'
+      responses:
+        '200':
+          $ref: '#/components/responses/RoleResponse'
+  /permissions:
+    post:
+      tags: [Permissions]
+      summary: Create permission
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateRoleRequest'
+        $ref: '#/components/requestBodies/CreatePermission'
       responses:
         '201':
-          description: Role created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RoleResponse'
+          $ref: '#/components/responses/PermissionResponse'
+    get:
+      tags: [Permissions]
+      summary: List permissions
+      responses:
+        '200':
+          description: Permissions
+  /permissions/{permissionId}:
+    get:
+      tags: [Permissions]
+      summary: Get permission
+      parameters:
+        - $ref: '#/components/parameters/PermissionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/PermissionResponse'
   /users/{userId}/roles/{roleId}:
-    put:
-      tags: [Roles]
+    post:
+      tags: [Assignments]
       summary: Assign role to user
       parameters:
         - $ref: '#/components/parameters/UserId'
@@ -125,7 +175,7 @@ paths:
         '204':
           description: Role assigned
     delete:
-      tags: [Roles]
+      tags: [Assignments]
       summary: Remove role from user
       parameters:
         - $ref: '#/components/parameters/UserId'
@@ -133,97 +183,167 @@ paths:
       responses:
         '204':
           description: Role removed
-  /permissions:
-    get:
-      tags: [Permissions]
-      summary: List permissions
-      responses:
-        '200':
-          description: Permission list
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PermissionListResponse'
-    post:
-      tags: [Permissions]
-      summary: Create permission
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreatePermissionRequest'
-      responses:
-        '201':
-          description: Permission created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PermissionResponse'
   /roles/{roleId}/permissions/{permissionId}:
-    put:
-      tags: [Permissions]
-      summary: Attach permission to role
+    post:
+      tags: [Assignments]
+      summary: Assign permission to role
       parameters:
         - $ref: '#/components/parameters/RoleId'
         - $ref: '#/components/parameters/PermissionId'
       responses:
         '204':
-          description: Permission attached
+          description: Permission assigned
+    delete:
+      tags: [Assignments]
+      summary: Remove permission from role
+      parameters:
+        - $ref: '#/components/parameters/RoleId'
+        - $ref: '#/components/parameters/PermissionId'
+      responses:
+        '204':
+          description: Permission removed
   /service-accounts:
+    post:
+      tags: [ServiceAccounts]
+      summary: Create service account
+      requestBody:
+        $ref: '#/components/requestBodies/CreateServiceAccount'
+      responses:
+        '201':
+          $ref: '#/components/responses/ServiceAccountResponse'
     get:
       tags: [ServiceAccounts]
       summary: List service accounts
       responses:
         '200':
-          description: Service account list
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceAccountListResponse'
+          description: Service accounts
+  /service-accounts/{serviceAccountId}:
+    get:
+      tags: [ServiceAccounts]
+      summary: Get service account
+      parameters:
+        - $ref: '#/components/parameters/ServiceAccountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceAccountResponse'
+    patch:
+      tags: [ServiceAccounts]
+      summary: Update service account
+      parameters:
+        - $ref: '#/components/parameters/ServiceAccountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceAccountResponse'
+  /service-accounts/{serviceAccountId}/disable:
     post:
       tags: [ServiceAccounts]
-      summary: Create service account
+      summary: Disable service account
+      parameters:
+        - $ref: '#/components/parameters/ServiceAccountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceAccountResponse'
+  /service-accounts/{serviceAccountId}/enable:
+    post:
+      tags: [ServiceAccounts]
+      summary: Enable service account
+      parameters:
+        - $ref: '#/components/parameters/ServiceAccountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceAccountResponse'
+  /service-accounts/{serviceAccountId}/lock:
+    post:
+      tags: [ServiceAccounts]
+      summary: Lock service account
+      parameters:
+        - $ref: '#/components/parameters/ServiceAccountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceAccountResponse'
+  /service-accounts/{serviceAccountId}/unlock:
+    post:
+      tags: [ServiceAccounts]
+      summary: Unlock service account
+      parameters:
+        - $ref: '#/components/parameters/ServiceAccountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/ServiceAccountResponse'
+  /access-policies:
+    post:
+      tags: [AccessPolicies]
+      summary: Create access policy
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateServiceAccountRequest'
+        $ref: '#/components/requestBodies/CreateAccessPolicy'
       responses:
         '201':
-          description: Service account created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceAccountResponse'
-  /access-policies:
+          $ref: '#/components/responses/AccessPolicyResponse'
     get:
       tags: [AccessPolicies]
       summary: List access policies
       responses:
         '200':
-          description: Access policy list
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccessPolicyListResponse'
+          description: Access policies
+  /access-policies/{policyId}:
+    get:
+      tags: [AccessPolicies]
+      summary: Get access policy
+      parameters:
+        - $ref: '#/components/parameters/PolicyId'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccessPolicyResponse'
+    patch:
+      tags: [AccessPolicies]
+      summary: Update access policy
+      parameters:
+        - $ref: '#/components/parameters/PolicyId'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccessPolicyResponse'
+  /access-policies/{policyId}/activate:
     post:
       tags: [AccessPolicies]
-      summary: Create access policy
+      summary: Activate access policy
+      parameters:
+        - $ref: '#/components/parameters/PolicyId'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccessPolicyResponse'
+  /access-policies/{policyId}/retire:
+    post:
+      tags: [AccessPolicies]
+      summary: Retire access policy
+      parameters:
+        - $ref: '#/components/parameters/PolicyId'
+      responses:
+        '200':
+          $ref: '#/components/responses/AccessPolicyResponse'
+  /token-references:
+    post:
+      tags: [TokenReferences]
+      summary: Create token reference
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateAccessPolicyRequest'
+        $ref: '#/components/requestBodies/CreateTokenReference'
       responses:
         '201':
-          description: Access policy created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccessPolicyResponse'
+          $ref: '#/components/responses/TokenReferenceResponse'
+    get:
+      tags: [TokenReferences]
+      summary: List token references
+      responses:
+        '200':
+          description: Token references
+  /token-references/{tokenReferenceId}:
+    get:
+      tags: [TokenReferences]
+      summary: Get token reference
+      parameters:
+        - $ref: '#/components/parameters/TokenReferenceId'
+      responses:
+        '200':
+          $ref: '#/components/responses/TokenReferenceResponse'
   /token-references/{tokenReferenceId}/revoke:
     post:
       tags: [TokenReferences]
@@ -231,290 +351,160 @@ paths:
       parameters:
         - $ref: '#/components/parameters/TokenReferenceId'
       responses:
-        '204':
-          description: Token reference revoked
+        '200':
+          $ref: '#/components/responses/TokenReferenceResponse'
 components:
   parameters:
     UserId:
       name: userId
       in: path
       required: true
-      schema:
-        type: string
-        format: uuid
+      schema: { type: string, format: uuid }
     RoleId:
       name: roleId
       in: path
       required: true
-      schema:
-        type: string
-        format: uuid
+      schema: { type: string, format: uuid }
     PermissionId:
       name: permissionId
       in: path
       required: true
-      schema:
-        type: string
-        format: uuid
+      schema: { type: string, format: uuid }
+    ServiceAccountId:
+      name: serviceAccountId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    PolicyId:
+      name: policyId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
     TokenReferenceId:
       name: tokenReferenceId
       in: path
       required: true
-      schema:
-        type: string
-        format: uuid
+      schema: { type: string, format: uuid }
+  requestBodies:
+    CreateUser:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [username, displayName, email]
+            properties:
+              username: { type: string }
+              displayName: { type: string }
+              email: { type: string, format: email }
+    UpdateUser:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              displayName: { type: string }
+              email: { type: string, format: email }
+    CreateRole:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [roleCode, roleName]
+            properties:
+              roleCode: { type: string }
+              roleName: { type: string }
+              description: { type: string }
+    CreatePermission:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [permissionCode, permissionName]
+            properties:
+              permissionCode: { type: string }
+              permissionName: { type: string }
+              description: { type: string }
+    CreateServiceAccount:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [accountName]
+            properties:
+              accountName: { type: string }
+              description: { type: string }
+    CreateAccessPolicy:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [policyCode, policyName]
+            properties:
+              policyCode: { type: string }
+              policyName: { type: string }
+              description: { type: string }
+    CreateTokenReference:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [subjectType, subjectId, expiresAt]
+            properties:
+              subjectType:
+                type: string
+                enum: [USER, SERVICE_ACCOUNT]
+              subjectId: { type: string, format: uuid }
+              expiresAt: { type: string }
   responses:
+    UserResponse:
+      description: User response
+    RoleResponse:
+      description: Role response
+    PermissionResponse:
+      description: Permission response
+    ServiceAccountResponse:
+      description: Service account response
+    AccessPolicyResponse:
+      description: Access policy response
+    TokenReferenceResponse:
+      description: Token reference response
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     NotFound:
-      description: Resource not found
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    Status:
-      type: string
-      enum: [ACTIVE, DISABLED, LOCKED, PENDING]
-    PolicyStatus:
-      type: string
-      enum: [ACTIVE, DISABLED, DRAFT]
-    TokenStatus:
-      type: string
-      enum: [ACTIVE, EXPIRED, REVOKED]
-    User:
-      type: object
-      required: [userId, username, displayName, email, status, createdAt, updatedAt]
-      properties:
-        userId:
-          type: string
-          format: uuid
-        username:
-          type: string
-        displayName:
-          type: string
-        email:
-          type: string
-          format: email
-        status:
-          $ref: '#/components/schemas/Status'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    CreateUserRequest:
-      type: object
-      required: [username, displayName, email]
-      properties:
-        username:
-          type: string
-        displayName:
-          type: string
-        email:
-          type: string
-          format: email
-    UpdateUserRequest:
-      type: object
-      properties:
-        displayName:
-          type: string
-        email:
-          type: string
-          format: email
-        status:
-          $ref: '#/components/schemas/Status'
-    Role:
-      type: object
-      required: [roleId, roleCode, roleName, status]
-      properties:
-        roleId:
-          type: string
-          format: uuid
-        roleCode:
-          type: string
-        roleName:
-          type: string
-        description:
-          type: string
-        status:
-          type: string
-          enum: [ACTIVE, DISABLED, DEPRECATED]
-    CreateRoleRequest:
-      type: object
-      required: [roleCode, roleName]
-      properties:
-        roleCode:
-          type: string
-        roleName:
-          type: string
-        description:
-          type: string
-    Permission:
-      type: object
-      required: [permissionId, permissionCode, permissionName]
-      properties:
-        permissionId:
-          type: string
-          format: uuid
-        permissionCode:
-          type: string
-        permissionName:
-          type: string
-        description:
-          type: string
-    CreatePermissionRequest:
-      type: object
-      required: [permissionCode, permissionName]
-      properties:
-        permissionCode:
-          type: string
-        permissionName:
-          type: string
-        description:
-          type: string
-    ServiceAccount:
-      type: object
-      required: [serviceAccountId, accountName, status, createdAt]
-      properties:
-        serviceAccountId:
-          type: string
-          format: uuid
-        accountName:
-          type: string
-        description:
-          type: string
-        status:
-          $ref: '#/components/schemas/Status'
-        createdAt:
-          type: string
-          format: date-time
-    CreateServiceAccountRequest:
-      type: object
-      required: [accountName]
-      properties:
-        accountName:
-          type: string
-        description:
-          type: string
-    AccessPolicy:
-      type: object
-      required: [policyId, policyCode, policyName, status]
-      properties:
-        policyId:
-          type: string
-          format: uuid
-        policyCode:
-          type: string
-        policyName:
-          type: string
-        description:
-          type: string
-        status:
-          $ref: '#/components/schemas/PolicyStatus'
-    CreateAccessPolicyRequest:
-      type: object
-      required: [policyCode, policyName]
-      properties:
-        policyCode:
-          type: string
-        policyName:
-          type: string
-        description:
-          type: string
-    TokenReference:
-      type: object
-      required: [tokenReferenceId, subjectType, subjectId, issuedAt, expiresAt, status]
-      properties:
-        tokenReferenceId:
-          type: string
-          format: uuid
-        subjectType:
-          type: string
-          enum: [USER, SERVICE_ACCOUNT]
-        subjectId:
-          type: string
-          format: uuid
-        issuedAt:
-          type: string
-          format: date-time
-        expiresAt:
-          type: string
-          format: date-time
-        revokedAt:
-          type: string
-          format: date-time
-          nullable: true
-        status:
-          $ref: '#/components/schemas/TokenStatus'
-    UserResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/User'
-    UserListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-    RoleResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Role'
-    RoleListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
-    PermissionResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/Permission'
-    PermissionListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-    ServiceAccountResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/ServiceAccount'
-    ServiceAccountListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceAccount'
-    AccessPolicyResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/AccessPolicy'
-    AccessPolicyListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessPolicy'
     ErrorResponse:
       type: object
       required: [error]
       properties:
         error:
           type: object
-          required: [code, message]
+          required: [errorCode, errorMessage, correlationId, timestamp]
           properties:
-            code:
+            errorCode:
               type: string
-            message:
-              type: string
+              enum: [VALIDATION_ERROR, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, CONFLICT, BOUNDARY_VIOLATION, INTERNAL_ERROR]
+            errorMessage: { type: string }
+            correlationId: { type: string }
+            timestamp: { type: string, format: date-time }

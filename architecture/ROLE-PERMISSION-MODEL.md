@@ -14,7 +14,7 @@ Minimum fields:
 | roleCode | string | Stable code, for example administrator |
 | roleName | string | Human-readable name |
 | description | string | Role purpose |
-| status | enum | ACTIVE, DISABLED, DEPRECATED |
+| status | enum | ACTIVE, DISABLED |
 
 Examples:
 

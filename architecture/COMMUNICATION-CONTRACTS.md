@@ -12,13 +12,16 @@ All contracts are drafts only and must be routed through communicationLayer (com
 | CreateUser | Create an idM user |
 | UpdateUser | Update idM user profile fields |
 | DisableUser | Disable user access |
+| EnableUser | Enable user access |
 | CreateRole | Create an idM role |
 | AssignRoleToUser | Assign role to user |
 | RemoveRoleFromUser | Remove role from user |
 | CreatePermission | Create an idM permission |
 | AttachPermissionToRole | Attach permission to role |
+| RemovePermissionFromRole | Remove permission from role |
 | CreateServiceAccount | Create a non-human access subject |
 | CreateAccessPolicy | Create an access policy |
+| RevokeTokenReference | Revoke an idM token reference |
 
 ## Event Drafts
 
@@ -33,6 +36,7 @@ idm.role.assignedToUser
 idm.role.removedFromUser
 idm.permission.created
 idm.permission.attachedToRole
+idm.permission.removedFromRole
 idm.serviceAccount.created
 idm.accessPolicy.created
 idm.tokenReference.revoked

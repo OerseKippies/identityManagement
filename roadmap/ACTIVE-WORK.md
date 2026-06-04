@@ -5,19 +5,26 @@ Status: Architecture Foundation
 ## Current Work
 
 ```text
-Phase 1: Documentation Foundation
+MVP Implementation Foundation Complete
 ```
 
 ## Active Objectives
 
 - Keep idM aligned with OK-Core Option A.
-- Complete architecture documentation.
-- Keep API contract status as DRAFT_IN_MODULE.
+- Maintain architecture documentation.
+- Keep API contract status as DRAFT_IN_MODULE until OK-Core acceptance.
 - Avoid canonical identity or cross-domain mapping scope.
+- Harden the PHP 8.3 and MariaDB implementation after MVP foundation.
 
 ## Next Work
 
 ```text
-Phase 2: Domain Models
-Phase 3: API Draft refinement
+Automated tests
+Authentication integration
+commL contract alignment
+Deployment verification on Versio
 ```
+
+## Implementation Status
+
+MVP IMPLEMENTATION FOUNDATION COMPLETE

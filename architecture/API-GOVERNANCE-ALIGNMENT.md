@@ -13,7 +13,7 @@ Authority: OK-Core API-GOVERNANCE.md
 5. Endpoints: drafted in `docs/api/idm-api-draft.yaml`.
 6. Request models: drafted in the OpenAPI file.
 7. Response models: drafted in the OpenAPI file.
-8. Status values: ACTIVE, DISABLED, LOCKED, PENDING, DRAFT, EXPIRED, REVOKED.
+8. Status values: PENDING, ACTIVE, DISABLED, LOCKED, DRAFT, RETIRED, EXPIRED, REVOKED.
 9. Error cases: validation, conflict, not found, forbidden, boundary violation.
 10. Events emitted: draft idM events only.
 11. Events consumed: none required for the MVP foundation.

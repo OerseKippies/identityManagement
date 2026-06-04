@@ -16,7 +16,7 @@ The MVP policy model is intentionally small and does not define a complete polic
 | policyCode | string | Stable code |
 | policyName | string | Human-readable name |
 | description | string | Policy purpose |
-| status | enum | ACTIVE, DISABLED, DRAFT |
+| status | enum | DRAFT, ACTIVE, RETIRED |
 
 ## Policy Links
 
