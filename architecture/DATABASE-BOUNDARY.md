@@ -16,6 +16,8 @@ TokenReference
 RolePermission links
 UserRole links
 ServiceAccountRole links
+Audit log records for idM-owned access identity events
+Schema migration metadata
 ```
 
 ## Allowed References
@@ -36,6 +38,7 @@ Shared mutable tables
 Direct writes to another module database
 Canonical business-object identity tables
 Cross-domain identity mapping tables
+Customer/contact/product/animal/order/publication/advertisement tables
 ```
 
 ## Principle

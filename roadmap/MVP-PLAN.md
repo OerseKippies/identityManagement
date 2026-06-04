@@ -1,12 +1,12 @@
 # idM MVP Plan
 
-Status: Architecture Foundation
+Status: Architecture Foundation Complete
 
 ## MVP Goal
 
 Create a deployable access identity foundation for the OK ecosystem.
 
-## MVP Scope
+## Scope
 
 ```text
 User
@@ -17,7 +17,25 @@ AccessPolicy
 TokenReference
 ```
 
-## MVP Excludes
+## Completed Architecture Foundation Phases
+
+1. Documentation Foundation
+2. Domain Models
+3. API Draft
+4. MariaDB Schema Design Documentation
+5. Security Model
+6. Audit Model
+7. Research
+8. DoD Validation
+9. OK-Core Handover
+
+## Next Phase
+
+```text
+MVP Implementation Build
+```
+
+## Exclusions
 
 ```text
 CanonicalIdentity
@@ -28,28 +46,5 @@ IdentityResolution
 IdentityLifecycle
 IdentityAuditRecord
 Business-object identity ownership
-Full OAuth platform
-```
-
-## Phases
-
-1. Documentation Foundation
-2. Domain Models
-3. API Draft
-4. MariaDB Schema Design
-5. PHP 8.3 Implementation
-6. Testing
-7. Deployment
-
-## Success Criteria
-
-```text
-Governance complete
-Ownership defined
-Non-ownership defined
-Deployment aligned
-Models documented
-API draft available
-Roadmap and backlog available
-Research items registered
+Full OAuth/OIDC provider
 ```

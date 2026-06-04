@@ -1,6 +1,6 @@
 # identityManagement (idM)
 
-Status: Architecture Foundation
+Status: Architecture Foundation Complete
 Module code: idM
 Authority: OK-Core
 Deployment classification: VERSIO_HOSTED
@@ -24,20 +24,49 @@ All cross-module communication must flow through communicationLayer (commL).
 Module -> communicationLayer (commL) -> Module
 ```
 
-This repository currently provides the MVP architecture foundation, documentation set, local governance record, roadmap, and draft API notes for OK-Core review.
+This repository provides the completed architecture foundation, documentation set, local governance record, roadmap, and draft API notes for OK-Core review.
 
-## Implementation Status
+## Ownership Summary
 
-MVP IMPLEMENTATION FOUNDATION COMPLETE
+Owned:
 
-The repository now contains a dependency-free PHP 8.3 MVP foundation with:
+```text
+User
+Role
+Permission
+ServiceAccount
+AccessPolicy
+TokenReference
+```
 
-- Public JSON entrypoint in `public/index.php`
-- Minimal router, request, response, and error handling
-- PDO-based MariaDB repositories
-- Domain services for idM-owned entities
-- Audit logging for state-changing endpoints
-- MariaDB 10.6 compatible migration SQL
-- Manual curl test documentation
+Not owned:
 
-No Composer, NodeJS, npm, Docker, Redis, RabbitMQ, WebSockets, Python 3 runtime dependency, or long-running daemon is required.
+```text
+Canonical identity concepts
+Business-object identity concepts
+Foreign module data
+Foreign module workflows
+Cross-domain identity mapping
+```
+
+## Repository Map
+
+```text
+architecture/  Architecture, security, audit, database boundary and DoD validation
+database/      MariaDB table design documentation
+docs/api/      DRAFT_IN_MODULE API draft and notes
+governance/    Local governance and ADRs
+handover/      OK-Core handover package
+research/      Accepted MVP foundation research
+roadmap/       Active work, MVP plan and backlog
+audit/         DoD gap assessment and closure record
+```
+
+## Current Readiness Status
+
+```text
+Architecture Foundation Complete
+MVP Ready For Implementation
+```
+
+No PHP runtime implementation is included in this closure pass.

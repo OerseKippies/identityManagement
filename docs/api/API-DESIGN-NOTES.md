@@ -123,6 +123,42 @@ communicationLayer (commL)
 OK-Core API governance
 ```
 
+## Authentication Model
+
+Authentication is an MVP implementation concern for idM-owned User and ServiceAccount subjects.
+
+The API draft assumes authenticated access through future idM or commL-mediated controls.
+
+idM does not define a full OAuth/OIDC provider in the MVP.
+
+## Authorization Model
+
+Authorization follows RBAC:
+
+```text
+User -> Role
+Role -> Permission
+ServiceAccount -> Role
+AccessPolicy
+```
+
+## Versioning Strategy
+
+The module draft uses:
+
+```text
+v1-draft
+DRAFT_IN_MODULE
+```
+
+Canonical accepted API versions belong in OK-Core after review.
+
+## API Boundaries
+
+The API exposes only idM-owned access identity concepts.
+
+It must not expose canonical identity, identity registry, cross-domain identity mapping, or foreign module data ownership.
+
 ## Out Of Scope
 
 ```text

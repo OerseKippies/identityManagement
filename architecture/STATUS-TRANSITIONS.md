@@ -1,57 +1,149 @@
 # idM Status Transitions
 
-Status: MVP Ready
+Status: Architecture Foundation Complete
 
 ## Purpose
 
-This document defines allowed status transitions for idM-owned entities.
+This document defines lifecycle states, valid transitions, invalid transitions and rationale for idM-owned entities.
 
-No transition may imply ownership of canonical business-object identity or foreign module lifecycle.
+No transition creates ownership of canonical business-object identity or foreign module lifecycle.
 
 ## User
 
-| From | To | Meaning |
+Lifecycle states:
+
+```text
+PENDING
+ACTIVE
+DISABLED
+LOCKED
+```
+
+Valid transitions:
+
+| From | To | Rationale |
 |---|---|---|
-| PENDING | ACTIVE | User access is activated |
-| ACTIVE | DISABLED | User access is disabled |
-| ACTIVE | LOCKED | User access is locked |
-| LOCKED | ACTIVE | User access is unlocked |
-| DISABLED | ACTIVE | User access is re-enabled |
+| PENDING | ACTIVE | Activate a newly created user |
+| ACTIVE | DISABLED | Disable normal access |
+| ACTIVE | LOCKED | Temporarily block access after risk signal |
+| LOCKED | ACTIVE | Unlock after review |
+| DISABLED | ACTIVE | Re-enable after administrative decision |
 
-## Role
+Invalid transition examples:
 
-| From | To | Meaning |
-|---|---|---|
-| ACTIVE | DISABLED | Role can no longer be assigned or used |
+- DISABLED -> LOCKED is invalid.
+- LOCKED -> DISABLED is invalid unless future governance explicitly allows it.
+- PENDING -> LOCKED is invalid.
 
-## Permission
+Diagram:
 
-| From | To | Meaning |
-|---|---|---|
-| ACTIVE | DISABLED | Permission can no longer be assigned or used |
+```text
+PENDING -> ACTIVE -> DISABLED
+              |
+              v
+            LOCKED
+              |
+              v
+            ACTIVE
+```
 
 ## ServiceAccount
 
-| From | To | Meaning |
+Lifecycle states:
+
+```text
+PENDING
+ACTIVE
+DISABLED
+LOCKED
+```
+
+Valid transitions:
+
+| From | To | Rationale |
 |---|---|---|
-| PENDING | ACTIVE | Service account access is activated |
-| ACTIVE | DISABLED | Service account access is disabled |
-| ACTIVE | LOCKED | Service account access is locked |
+| PENDING | ACTIVE | Activate a reviewed service account |
+| ACTIVE | DISABLED | Disable normal service access |
+| ACTIVE | LOCKED | Temporarily block suspected compromise |
+| LOCKED | ACTIVE | Unlock after review |
+| DISABLED | ACTIVE | Re-enable after administrative decision |
+
+Invalid transition examples:
+
+- DISABLED -> LOCKED is invalid.
+- PENDING -> DISABLED is invalid.
+- LOCKED -> DISABLED is invalid unless future governance explicitly allows it.
+
+Diagram:
+
+```text
+PENDING -> ACTIVE -> DISABLED
+              |
+              v
+            LOCKED
+              |
+              v
+            ACTIVE
+```
 
 ## AccessPolicy
 
-| From | To | Meaning |
+Lifecycle states:
+
+```text
+DRAFT
+ACTIVE
+RETIRED
+```
+
+Valid transitions:
+
+| From | To | Rationale |
 |---|---|---|
-| DRAFT | ACTIVE | Policy is active |
-| ACTIVE | RETIRED | Policy is retired from active use |
+| DRAFT | ACTIVE | Publish policy for use |
+| ACTIVE | RETIRED | Remove policy from active use |
+
+Invalid transition examples:
+
+- RETIRED -> ACTIVE is invalid unless future governance explicitly allows reinstatement.
+- DRAFT -> RETIRED is invalid.
+
+Diagram:
+
+```text
+DRAFT -> ACTIVE -> RETIRED
+```
 
 ## TokenReference
 
-| From | To | Meaning |
+Lifecycle states:
+
+```text
+ISSUED
+ACTIVE
+EXPIRED
+REVOKED
+```
+
+Valid transitions:
+
+| From | To | Rationale |
 |---|---|---|
-| ACTIVE | REVOKED | Token reference is revoked |
-| ACTIVE | EXPIRED | Token reference has expired |
+| ISSUED | ACTIVE | Token reference becomes usable |
+| ACTIVE | EXPIRED | Token reference reaches expiration |
+| ACTIVE | REVOKED | Token reference is administratively revoked |
 
-## Validation Rule
+Invalid transition examples:
 
-Any status change outside this document must fail validation until accepted by OK-Core or a local idM ADR under OK-Core governance.
+- REVOKED -> ACTIVE is invalid.
+- EXPIRED -> ACTIVE is invalid.
+- ISSUED -> REVOKED is invalid unless future governance permits pre-activation revocation.
+
+Diagram:
+
+```text
+ISSUED -> ACTIVE -> EXPIRED
+             |
+             v
+          REVOKED
+```

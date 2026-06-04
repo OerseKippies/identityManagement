@@ -1,6 +1,6 @@
 # Table: idm_service_account_roles
 
-Status: MVP Implementation Foundation Complete
+Status: Architecture Foundation Complete
 
 ## Purpose
 

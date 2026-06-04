@@ -1,16 +1,14 @@
 # idM DoD Gap Assessment
 
 Date: 2026-06-04
-Status: Open
+Status: Closed
 Severity: Major
 
 ## Finding
 
-identityManagement is largely compliant with OK-Core governance and architecture requirements.
+identityManagement was largely compliant with OK-Core governance and architecture requirements, but did not yet fully satisfy the formal Definition of Done for Architecture Foundation Complete.
 
-However, the repository does not yet fully satisfy the formal Definition of Done for Architecture Foundation Complete.
-
-## Blocking Items
+## Original Blocking Items
 
 - Handover package missing
 - Security Model incomplete
@@ -19,28 +17,45 @@ However, the repository does not yet fully satisfy the formal Definition of Done
 - DoD validation document missing
 - Audit retention and governance details incomplete
 
-## Required Action
+## Closure Summary
 
-Execute:
+The DoD Closure Pass completed the missing handover, security model, state model, research, DoD validation, audit governance and root documentation deliverables.
 
-CCM – identityManagement (idM) DoD Closure Pass
+No governance, ownership, deployment, communication, API, database, audit, security, research, roadmap, documentation or handover blockers remain.
 
-## Expected Outcome
+## Files Changed
 
-Architecture Foundation Complete
+- README.md
+- ARCHITECTURE.md
+- MODULE-SCOPE.md
+- CHANGELOG.md
+- architecture/SECURITY-MODEL.md
+- architecture/STATUS-TRANSITIONS.md
+- architecture/AUDIT-LOGGING.md
+- architecture/DOD-VALIDATION.md
+- architecture/MVP-READINESS-REPORT.md
+- handover/OK-CORE-HANDOVER-IDM-MVP-ARCHITECTURE-COMPLETE.md
+- research/RESEARCH-REGISTER.md
+- research/RES-001-VERSIO-CONSTRAINTS.md
+- research/RES-002-IDENTITY-MANAGEMENT-PATTERNS.md
+- research/RES-003-RBAC-PATTERNS.md
+- research/RES-004-SERVICE-ACCOUNT-PATTERNS.md
+- research/RES-005-TOKEN-MANAGEMENT-PATTERNS.md
+- research/RES-006-SECURITY-CONSIDERATIONS.md
+- roadmap/ACTIVE-WORK.md
+- roadmap/MVP-PLAN.md
+- roadmap/MVP-BACKLOG.md
+- docs/api/API-DESIGN-NOTES.md
+- docs/api/idm-api-draft.yaml
 
-Next Status:
-MVP Ready For Implementation
+## Final Validation Result
 
-## Notes
+All DoD sections PASS.
 
-This finding does not indicate a governance failure.
+No Critical Findings remain.
 
-The repository is considered largely aligned with:
+## Remaining Recommendations
 
-- OK-Core governance
-- OK-Core module boundaries
-- OK-Core deployment strategy
-- OK-Core API governance
-
-Remaining work is documentation-completion and readiness-validation work only.
+- OK-Core should review the DRAFT_IN_MODULE API before canonization.
+- Implementation should define audit retention period before production use.
+- Future PHP implementation must stay within the accepted idM ownership boundary.

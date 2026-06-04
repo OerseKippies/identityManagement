@@ -1,6 +1,6 @@
 # idM Test Strategy
 
-Status: MVP Implementation Foundation Complete
+Status: Architecture Foundation Complete
 
 ## Purpose
 
@@ -40,6 +40,8 @@ The idM test strategy verifies that the implementation stays inside the accepted
 - Verify audit records include auditId, entityType, entityId, action, actorType, actorId, timestamp, and details.
 - Verify audit details do not store foreign module records.
 
-## Implementation Status
+## Readiness Status
 
-MVP IMPLEMENTATION FOUNDATION COMPLETE
+Architecture Foundation Complete.
+
+MVP Ready For Implementation.

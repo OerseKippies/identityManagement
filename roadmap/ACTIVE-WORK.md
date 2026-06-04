@@ -1,30 +1,27 @@
 # idM Active Work
 
-Status: Architecture Foundation
+Status: Architecture Foundation Complete
 
 ## Current Work
 
 ```text
-MVP Implementation Foundation Complete
+DoD Closure Pass complete
+Architecture Foundation Complete
 ```
 
-## Active Objectives
+## Active Blockers
 
-- Keep idM aligned with OK-Core Option A.
-- Maintain architecture documentation.
-- Keep API contract status as DRAFT_IN_MODULE until OK-Core acceptance.
-- Avoid canonical identity or cross-domain mapping scope.
-- Harden the PHP 8.3 and MariaDB implementation after MVP foundation.
+None.
 
 ## Next Work
 
 ```text
-Automated tests
-Authentication integration
-commL contract alignment
-Deployment verification on Versio
+MVP Implementation Build
 ```
 
-## Implementation Status
+## Guardrails
 
-MVP IMPLEMENTATION FOUNDATION COMPLETE
+- Do not change module ownership.
+- Keep API status DRAFT_IN_MODULE until OK-Core review.
+- Keep all cross-module access routed through communicationLayer (commL).
+- Do not introduce canonical identity or cross-domain identity mapping.
