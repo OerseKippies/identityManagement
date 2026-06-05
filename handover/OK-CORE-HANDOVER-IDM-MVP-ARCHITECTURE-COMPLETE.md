@@ -3,8 +3,16 @@
 Date: 2026-06-04
 Repository: OerseKippies/identityManagement
 Module: identityManagement (idM)
-Status: Architecture Foundation Complete
+Status: Architecture Foundation Complete — OK-Core APPROVED
 Next Status: MVP Ready For Implementation
+
+## OK-Core Approval
+
+| Field | Value |
+|---|---|
+| Record ID | APR-2026-06-05-002 |
+| Decision | APPROVED |
+| Approval record | OK-Core/approvals/records/APPROVAL-2026-06-05-IDM-ARCHITECTURE-FOUNDATION.md |
 
 ## 1. Governance Summary
 
