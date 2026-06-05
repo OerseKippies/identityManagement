@@ -7,8 +7,8 @@ Status: MVP Runtime Complete
 ```text
 MVP Runtime Complete
 Runtime Verification Final Pass: PASS (2026-06-05)
-OK-Core Submission: SUBMITTED (2026-06-05)
-READY FOR OK-CORE APPROVAL
+OK-Core Approval: APPROVED (APR-2026-06-05-017)
+Lifecycle: CLOSED
 ```
 
 ## Active Blockers

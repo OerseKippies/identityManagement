@@ -3,7 +3,7 @@
 Module: identityManagement (idM)
 Review Type: OK-Core Submission
 Date: 2026-06-05
-Status: READY FOR OK-CORE APPROVAL
+Status: CLOSED
 Result: PASS
 
 ## Submission Objective

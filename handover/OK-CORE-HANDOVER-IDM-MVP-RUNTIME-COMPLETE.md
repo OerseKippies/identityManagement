@@ -4,7 +4,7 @@ Date: 2026-06-05
 Module: identityManagement (idM)
 Module Code: idM
 Classification: VERSIO_HOSTED
-Status: **READY FOR OK-CORE APPROVAL**
+Status: **MVP Runtime APPROVED — Lifecycle CLOSED**
 
 ## Executive Summary
 

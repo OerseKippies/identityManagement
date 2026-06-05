@@ -3,8 +3,8 @@
 Module: identityManagement (idM)
 Request Type: Formal OK-Core MVP Runtime Approval
 Date: 2026-06-05
-Status: SUBMITTED
-Result: READY FOR OK-CORE APPROVAL
+Status: CLOSED
+Result: APPROVED
 
 ## Request
 

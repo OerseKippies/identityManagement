@@ -1,6 +1,6 @@
 # identityManagement (idM)
 
-Status: READY FOR OK-CORE APPROVAL
+Status: MVP Runtime APPROVED
 Module code: idM
 Authority: OK-Core
 Deployment classification: VERSIO_HOSTED
