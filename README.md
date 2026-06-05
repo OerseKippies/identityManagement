@@ -1,6 +1,6 @@
 # identityManagement (idM)
 
-Status: Architecture Foundation Complete
+Status: READY FOR OK-CORE APPROVAL
 Module code: idM
 Authority: OK-Core
 Deployment classification: VERSIO_HOSTED
@@ -16,57 +16,58 @@ idM owns only access identity data:
 - AccessPolicy
 - TokenReference
 
-idM does not own canonical business-object identity, identity resolution, cross-domain identity mapping, or identifiers for animals, products, customers, contacts, publications, advertisements, inventory, hatch runs, or orders.
-
 All cross-module communication must flow through communicationLayer (commL).
 
 ```text
 Module -> communicationLayer (commL) -> Module
 ```
 
-This repository provides the completed architecture foundation, documentation set, local governance record, roadmap, and draft API notes for OK-Core review.
+## Runtime
 
-## Ownership Summary
-
-Owned:
+PHP 8.3 MVP runtime with MariaDB 10.6 persistence.
 
 ```text
-User
-Role
-Permission
-ServiceAccount
-AccessPolicy
-TokenReference
+public/api/index.php   API entry point
+src/                   Application code
+migrations/            Database schema
+scripts/migrate.php    Migration runner
+tests/run.php          Unit tests
 ```
 
-Not owned:
+## Quick Start
 
-```text
-Canonical identity concepts
-Business-object identity concepts
-Foreign module data
-Foreign module workflows
-Cross-domain identity mapping
-```
+1. Copy `config/config.example.php` to `config/config.php`
+2. Configure MariaDB credentials and API key
+3. Run `php scripts/migrate.php`
+4. Serve `public/api` over HTTPS (or `php -S localhost:8080 -t public/api` for local use)
+5. Verify `GET /v1/health`
 
 ## Repository Map
 
 ```text
-architecture/  Architecture, security, audit, database boundary and DoD validation
-database/      MariaDB table design documentation
-docs/api/      DRAFT_IN_MODULE API draft and notes
-governance/    Local governance and ADRs
-handover/      OK-Core handover package
-research/      Accepted MVP foundation research
-roadmap/       Active work, MVP plan and backlog
-audit/         DoD gap assessment and closure record
+public/api/      HTTP API entry and OpenAPI draft
+src/             Runtime implementation
+migrations/      MariaDB migrations
+config/          Runtime configuration
+docs/            Domain models, state models, runtime evidence, tests
+contracts/       commL contract mapping
+reviews/         MVP runtime review report
+approval-request/ OK-Core approval request
+ADRs/            Architectural decision records
+architecture/    Architecture foundation documentation
+database/        Table design documentation
+governance/      Governance records
+handover/        OK-Core handover packages
+research/        Accepted MVP foundation research
+roadmap/         Active work and MVP plan
 ```
 
-## Current Readiness Status
+## Submission
 
-```text
-Architecture Foundation Complete
-MVP Ready For Implementation
-```
+- Handover: `handover/OK-CORE-HANDOVER-IDM-MVP-RUNTIME-COMPLETE.md`
+- Review: `reviews/REVIEW-IDM-003-OKCORE-SUBMISSION.md`
+- Approval request: `approval-request/RFA-IDM-003-OKCORE-APPROVAL.md`
 
-No PHP runtime implementation is included in this closure pass.
+## Governance
+
+Option A Access Identity boundary is preserved. idM does not implement canonical identity registry concepts.

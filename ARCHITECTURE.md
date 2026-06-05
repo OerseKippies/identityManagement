@@ -1,12 +1,12 @@
 # identityManagement Architecture
 
-Status: Architecture Foundation Complete
+Status: MVP Runtime Complete
 
 ## High-Level Architecture
 
 identityManagement (idM) is the Access Identity module for the OK ecosystem.
 
-It owns access identity concepts only:
+Owned concepts:
 
 ```text
 User
@@ -17,37 +17,34 @@ AccessPolicy
 TokenReference
 ```
 
-## Document Map
+## Runtime Components
 
 ```text
-architecture/MODULE-INVENTORY.md
-architecture/OWNERSHIP-MATRIX.md
-architecture/NON-OWNERSHIP-MATRIX.md
-architecture/SECURITY-MODEL.md
-architecture/STATUS-TRANSITIONS.md
-architecture/AUDIT-LOGGING.md
-architecture/DATABASE-BOUNDARY.md
-architecture/API-GOVERNANCE-ALIGNMENT.md
-architecture/DOD-VALIDATION.md
+public/api/index.php          HTTP entry
+src/Application.php           Routing, auth, error handling
+src/Domain/Service/*          Business logic and audit orchestration
+src/Repository/*              MariaDB persistence
+src/Audit/*                   Audit logging
+migrations/001_initial_schema.sql
 ```
 
-## Component Overview
+## API
 
-Planned MVP implementation components:
+Version: `v1` (DRAFT_IN_MODULE)
 
-```text
-idM API draft
-idM domain services
-idM-owned MariaDB schema
-idM audit logging
-idM security policies
-```
+OpenAPI: `docs/api/idm-api-draft.yaml`, `public/api/idm-api-draft.yaml`
 
-No runtime code is created by the DoD closure pass.
+## Cross-Cutting Concerns
 
-## Boundary Summary
+| Concern | Implementation |
+|---|---|
+| Correlation | `X-Correlation-Id` header, UUID v4, stored in audit |
+| Audit | Append-only `idm_audit_log` on every mutation |
+| Errors | Standard JSON error model with `correlationId` |
+| Security | API key gate (configurable), actor headers for audit |
+| Versioning | `/v1/*` routes, `X-Api-Version: v1` |
 
-Mandatory:
+## Boundary
 
 ```text
 Module -> communicationLayer (commL) -> Module
@@ -56,28 +53,33 @@ Module -> communicationLayer (commL) -> Module
 Forbidden:
 
 ```text
-Module -> Module
-Module -> Foreign Database
-Module -> Foreign Internal Code
-Shared Mutable Tables
-Canonical business-object identity ownership
+Module -> Module direct
+Canonical identity registry ownership
+Cross-domain identity mapping
 ```
 
-## Deployment Summary
-
-Classification:
+## Document Map
 
 ```text
-VERSIO_HOSTED
+DATABASE-SCHEMA.md
+PERSISTENCE-STRATEGY.md
+AUDIT-MODEL.md
+SECURITY-MODEL.md
+OPERATIONS-MODEL.md
+DEPLOYMENT.md
+VERSIO-COMPLIANCE.md
+architecture/*                Foundation documentation
+docs/domain-models/*
+docs/state-models/*
 ```
 
-Baseline:
+## Deployment
 
 ```text
 PHP 8.3
 MariaDB 10.6
 HTTPS
-Cron
-SSH
-Git deployment
+VERSIO_HOSTED
 ```
+
+No Composer, NodeJS, Docker, Redis, RabbitMQ, or long-running daemons.

@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-05
+
+### OK-Core Submission
+
+- Added `reviews/REVIEW-IDM-003-OKCORE-SUBMISSION.md`.
+- Added `approval-request/RFA-IDM-003-OKCORE-APPROVAL.md`.
+- Added `handover/OK-CORE-HANDOVER-IDM-MVP-RUNTIME-COMPLETE.md`.
+- Added `docs/runtime-evidence/CORRELATION-EVIDENCE.md`.
+- Status: READY FOR OK-CORE APPROVAL.
+
+### MVP Runtime Build
+
+- Added PHP 8.3 runtime (`public/api/index.php`, `src/*`).
+- Added MariaDB migration `migrations/001_initial_schema.sql` and `scripts/migrate.php`.
+- Implemented repositories, domain services, audit logging, and correlation support.
+- Implemented v1 API endpoints from `docs/api/idm-api-draft.yaml`.
+- Added unit tests (`tests/run.php`).
+- Added CCM mandatory outputs: domain models, state models, ADRs, contracts, runtime evidence, review report, and approval request.
+- Preserved Option A Access Identity scope; no canonical identity registry terms introduced.
+
 ## 2026-06-04
 
 ### Initial Repository Setup

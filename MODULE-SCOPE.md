@@ -1,6 +1,6 @@
 # identityManagement Module Scope
 
-Status: Architecture Foundation Complete
+Status: MVP Runtime Complete
 
 ## Owned
 
@@ -23,6 +23,23 @@ idM does not own:
 - foreign module workflows
 - cross-domain identity mapping
 - canonical identifiers for animals, products, customers, contacts, orders, publications, advertisements, inventory items, or hatch runs
+
+Explicitly excluded runtime/domain names:
+
+```text
+Identity
+IdentityReference
+IdentityCredentialReference
+ServiceAccountReference
+RoleReference
+PermissionReference
+CanonicalIdentity
+IdentityRegistry
+IdentityMapping
+ExternalIdentifier
+IdentityResolution
+IdentityLifecycle
+```
 
 ## Boundary Rule
 

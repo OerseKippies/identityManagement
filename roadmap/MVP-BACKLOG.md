@@ -1,6 +1,6 @@
 # idM MVP Backlog
 
-Status: Architecture Foundation Complete
+Status: MVP Runtime Complete
 
 ## Completed
 
@@ -12,19 +12,17 @@ Status: Architecture Foundation Complete
 - Audit Model
 - Research Deliverables
 - DoD Validation
-- Final OK-Core Handover
+- Final OK-Core Handover (Architecture Foundation)
 - DoD Closure Pass
+- PHP 8.3 Runtime Implementation
+- MariaDB Migrations and Repositories
+- Domain Services with Audit and Correlation
+- Public API Endpoints (v1)
+- Unit Tests and Runtime Evidence Package
+- Review Report and Approval Request
 
-## Next: MVP Implementation Build
+## Next
 
-- Create PHP 8.3 implementation.
-- Create MariaDB migration SQL.
-- Implement JSON API endpoints.
-- Implement validation and status transitions.
-- Implement audit writes.
-- Add manual and automated tests.
-- Verify on Versio baseline.
-
-## No Active Architecture Foundation Blockers
-
-All Architecture Foundation DoD sections pass.
+- OK-Core MVP Runtime evidence-based review
+- Production deployment configuration on Versio
+- API canonization after acceptance
