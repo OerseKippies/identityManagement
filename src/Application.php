@@ -7,6 +7,7 @@ namespace IdM;
 use IdM\Audit\AuditLogger;
 use IdM\Audit\AuditRepository;
 use IdM\Domain\Service\AccessPolicyService;
+use IdM\Domain\Service\ActorContextService;
 use IdM\Domain\Service\AssignmentService;
 use IdM\Domain\Service\PermissionService;
 use IdM\Domain\Service\RoleService;
@@ -33,24 +34,36 @@ use IdM\Repository\UserRepository;
 final class Application
 {
     private Config $config;
-    private Database $database;
+    private ?Database $database = null;
     private Clock $clock;
-    private Router $router;
+    private ?Router $router = null;
 
     public function __construct(string $configPath)
     {
         $this->config = Config::load($configPath);
         date_default_timezone_set($this->config->getString('app.timezone', 'UTC'));
-
-        $this->database = new Database($this->config);
         $this->clock = new Clock();
-        $this->router = $this->buildRouter();
     }
 
     public function handle(Request $request): Response
     {
         try {
-            if (!$this->isHealthRequest($request) && $this->config->getBool('api.require_api_key', true)) {
+            if ($this->isHealthRequest($request)) {
+                return Response::json(200, [
+                    'status' => 'healthy',
+                    'module' => 'identityManagement',
+                    'moduleCode' => 'idM',
+                    'version' => 'v1',
+                    'timestamp' => $this->clock->nowIso8601(),
+                ], $request->correlationId);
+            }
+
+            $this->ensureRouter();
+
+            if (
+                !$this->isCommLMediatedRequest($request)
+                && $this->config->getBool('api.require_api_key', true)
+            ) {
                 $provided = $request->header('x-api-key');
                 $expected = $this->config->getString('api.api_key');
                 if ($provided === null || !hash_equals($expected, $provided)) {
@@ -69,6 +82,23 @@ final class Application
     private function isHealthRequest(Request $request): bool
     {
         return $request->method === 'GET' && ($request->path === '/v1/health' || $request->path === '/health');
+    }
+
+    private function isCommLMediatedRequest(Request $request): bool
+    {
+        $sourceModule = strtolower(trim((string) ($request->header('x-source-module') ?? '')));
+
+        return $sourceModule === 'communicationlayer';
+    }
+
+    private function ensureRouter(): void
+    {
+        if ($this->router !== null) {
+            return;
+        }
+
+        $this->database = new Database($this->config);
+        $this->router = $this->buildRouter();
     }
 
     private function buildRouter(): Router
@@ -97,6 +127,11 @@ final class Application
             $auditLogger,
             $this->clock
         );
+        $actorContextService = new ActorContextService(
+            new UserRepository($this->database),
+            new ServiceAccountRepository($this->database),
+            new AssignmentRepository($this->database)
+        );
 
         $router = new Router();
         $actor = static fn (Request $request): ActorContext => ActorContext::fromHeaders(
@@ -104,22 +139,18 @@ final class Application
             $request->header('x-actor-id')
         );
 
-        $router->add('GET', '/v1/health', function (Request $request): Response {
-            return Response::json(200, [
-                'status' => 'healthy',
-                'module' => 'identityManagement',
-                'moduleCode' => 'idM',
-                'version' => 'v1',
-                'timestamp' => $this->clock->nowIso8601(),
-            ], $request->correlationId);
-        });
-
         $router->add('POST', '/v1/users', fn (Request $request): Response => Response::json(
             201,
             $userService->create($request->body ?? [], $actor($request), $request->correlationId),
             $request->correlationId
         ));
         $router->add('GET', '/v1/users', fn (Request $request): Response => Response::json(200, ['items' => $userService->list()], $request->correlationId));
+        $router->add('GET', '/v1/identity/users', fn (Request $request): Response => Response::json(200, ['items' => $userService->list()], $request->correlationId));
+        $router->add('POST', '/v1/identity/actor-context', fn (Request $request): Response => Response::json(
+            200,
+            $actorContextService->resolve($request->body ?? [], $request->correlationId),
+            $request->correlationId
+        ));
         $router->add('GET', '/v1/users/(?P<userId>[0-9a-f-]{36})', fn (Request $request, array $params): Response => Response::json(
             200,
             $userService->get($params['userId']),

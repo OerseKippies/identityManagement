@@ -86,4 +86,29 @@ final class AssignmentRepository
 
         return (bool) $statement->fetchColumn();
     }
+
+    /** @return list<string> */
+    public function listRoleCodesForUser(string $userId): array
+    {
+        $sql = 'SELECT r.roleCode FROM idm_user_roles ur
+                INNER JOIN idm_roles r ON r.roleId = ur.roleId
+                WHERE ur.userId = :userId ORDER BY r.roleCode';
+        $statement = $this->database->pdo()->prepare($sql);
+        $statement->execute(['userId' => $userId]);
+
+        return array_map(static fn (array $row): string => (string) $row['roleCode'], $statement->fetchAll());
+    }
+
+    /** @return list<string> */
+    public function listPermissionCodesForUser(string $userId): array
+    {
+        $sql = 'SELECT DISTINCT p.permissionCode FROM idm_user_roles ur
+                INNER JOIN idm_role_permissions rp ON rp.roleId = ur.roleId
+                INNER JOIN idm_permissions p ON p.permissionId = rp.permissionId
+                WHERE ur.userId = :userId ORDER BY p.permissionCode';
+        $statement = $this->database->pdo()->prepare($sql);
+        $statement->execute(['userId' => $userId]);
+
+        return array_map(static fn (array $row): string => (string) $row['permissionCode'], $statement->fetchAll());
+    }
 }
