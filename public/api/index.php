@@ -36,5 +36,5 @@ function normalizePath(Request $request): Request
         }
     }
 
-    return new Request($request->method, $path, $request->headers, $request->body, $request->correlationId);
+    return new Request($request->method, $path, $request->headers, $request->body, $request->correlationId, $request->query);
 }

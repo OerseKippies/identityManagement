@@ -4,72 +4,81 @@
                   "auditLog":  {
                                    "expectedAction":  "CREATE_USER",
                                    "note":  "Audit row written on mutation; GET /v1/audit-log implemented in repo",
-                                   "correlationId":  "bb716d22-1dbd-4114-aed1-e37865faed4e"
+                                   "correlationId":  "24c5e42f-05ce-4981-9beb-5983b83a6053"
                                },
                   "viewUser":  {
                                    "response":  {
-                                                    "userId":  "c2e331b9-8f62-41f0-bc05-e249d582543a",
-                                                    "username":  "admin.mvp.0e7634ad",
-                                                    "displayName":  "Admin MVP User 0e7634ad",
-                                                    "email":  "admin.mvp.0e7634ad@example.test",
+                                                    "userId":  "a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd",
+                                                    "username":  "admin.mvp.83af0e19",
+                                                    "displayName":  "Admin MVP User 83af0e19",
+                                                    "email":  "admin.mvp.83af0e19@example.test",
                                                     "status":  "ACTIVE",
-                                                    "createdAt":  "2026-06-07 22:12:11",
-                                                    "updatedAt":  "2026-06-07 22:12:13"
+                                                    "createdAt":  "2026-06-07 22:15:43",
+                                                    "updatedAt":  "2026-06-07 22:15:46"
                                                 },
-                                   "correlationId":  "f5595722-d912-44ac-b5c8-3a189ad905e4"
+                                   "correlationId":  "dc694408-fff1-4b59-92f2-e2bb8ace1938"
                                },
                   "enableUser":  {
                                      "response":  {
-                                                      "userId":  "c2e331b9-8f62-41f0-bc05-e249d582543a",
-                                                      "username":  "admin.mvp.0e7634ad",
-                                                      "displayName":  "Admin MVP User 0e7634ad",
-                                                      "email":  "admin.mvp.0e7634ad@example.test",
+                                                      "userId":  "a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd",
+                                                      "username":  "admin.mvp.83af0e19",
+                                                      "displayName":  "Admin MVP User 83af0e19",
+                                                      "email":  "admin.mvp.83af0e19@example.test",
                                                       "status":  "ACTIVE",
-                                                      "createdAt":  "2026-06-07 22:12:11",
-                                                      "updatedAt":  "2026-06-07 22:12:13"
+                                                      "createdAt":  "2026-06-07 22:15:43",
+                                                      "updatedAt":  "2026-06-07 22:15:46"
                                                   },
-                                     "correlationId":  "3d7dc4d5-5410-495d-be3b-63a796ad2c8b"
+                                     "correlationId":  "fb4d1b95-8b6f-463a-bb30-a7f25614d199"
                                  },
                   "actorContextResolve":  {
                                               "response":  {
                                                                "actorType":  "USER",
-                                                               "actorId":  "c2e331b9-8f62-41f0-bc05-e249d582543a",
-                                                               "displayName":  "Admin MVP User 0e7634ad (updated)",
+                                                               "actorId":  "a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd",
+                                                               "displayName":  "Admin MVP User 83af0e19 (updated)",
                                                                "status":  "ACTIVE",
                                                                "roles":  [
-                                                                             "admin.mvp.0e7634ad"
+                                                                             "admin.mvp.83af0e19"
                                                                          ],
                                                                "permissions":  [
-                                                                                   "admin.mvp.0e7634ad"
+                                                                                   "admin.mvp.83af0e19"
                                                                                ],
                                                                "tokenReferenceId":  null,
-                                                               "correlationId":  "f059dfe6-b7bb-4b2d-bb8f-acad7bc7ed2e"
+                                                               "correlationId":  "1047e66f-22a0-43fc-b081-df7e7cbe1b02"
                                                            },
-                                              "correlationId":  "f059dfe6-b7bb-4b2d-bb8f-acad7bc7ed2e"
+                                              "correlationId":  "1047e66f-22a0-43fc-b081-df7e7cbe1b02"
                                           },
                   "createRole":  {
                                      "response":  {
-                                                      "roleId":  "4600e33d-b29a-4927-ad53-88f4b8fd0cfa",
-                                                      "roleCode":  "admin.mvp.0e7634ad",
-                                                      "roleName":  "Admin MVP Role 0e7634ad",
+                                                      "roleId":  "9cd45d2a-7d35-497f-b691-0e06815d03c3",
+                                                      "roleCode":  "admin.mvp.83af0e19",
+                                                      "roleName":  "Admin MVP Role 83af0e19",
                                                       "description":  "CCM administration MVP validation role",
                                                       "status":  "ACTIVE",
-                                                      "createdAt":  "2026-06-07 22:12:22",
-                                                      "updatedAt":  "2026-06-07 22:12:22"
+                                                      "createdAt":  "2026-06-07 22:15:54",
+                                                      "updatedAt":  "2026-06-07 22:15:54"
                                                   },
-                                     "correlationId":  "197c4635-58b6-4b69-9451-320f8b59d598"
+                                     "correlationId":  "81285f18-2d95-405c-bcde-d695064fa5c7"
                                  },
                   "listUsers":  {
                                     "response":  {
                                                      "items":  [
                                                                    {
+                                                                       "userId":  "a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd",
+                                                                       "username":  "admin.mvp.83af0e19",
+                                                                       "displayName":  "Admin MVP User 83af0e19",
+                                                                       "email":  "admin.mvp.83af0e19@example.test",
+                                                                       "status":  "ACTIVE",
+                                                                       "createdAt":  "2026-06-07 22:15:43",
+                                                                       "updatedAt":  "2026-06-07 22:15:46"
+                                                                   },
+                                                                   {
                                                                        "userId":  "c2e331b9-8f62-41f0-bc05-e249d582543a",
                                                                        "username":  "admin.mvp.0e7634ad",
-                                                                       "displayName":  "Admin MVP User 0e7634ad",
+                                                                       "displayName":  "Admin MVP User 0e7634ad (updated)",
                                                                        "email":  "admin.mvp.0e7634ad@example.test",
                                                                        "status":  "ACTIVE",
                                                                        "createdAt":  "2026-06-07 22:12:11",
-                                                                       "updatedAt":  "2026-06-07 22:12:13"
+                                                                       "updatedAt":  "2026-06-07 22:12:41"
                                                                    },
                                                                    {
                                                                        "userId":  "eee419ad-803f-4763-a062-a2fba0f8d977",
@@ -100,57 +109,65 @@
                                                                    }
                                                                ]
                                                  },
-                                    "correlationId":  "34c536fd-5e6e-41f9-b72c-35494b02877e"
+                                    "correlationId":  "26c2d12c-2026-4134-9d7e-834c3913b1a5"
                                 },
                   "assignRoleToUser":  {
                                            "status":  204,
-                                           "correlationId":  "21da6c9f-308c-4d82-a335-662148ada9db"
+                                           "correlationId":  "ee54728a-2b55-4cb1-8466-d99b4e2bb51d"
                                        },
                   "updatePermission":  {
-                                           "status":  "SKIP_PENDING_DEPLOY",
-                                           "note":  "PATCH /v1/permissions implemented in repo"
+                                           "response":  {
+                                                            "permissionId":  "1f9dc8e6-1ee3-4633-9180-81a4228b54db",
+                                                            "permissionCode":  "admin.mvp.83af0e19",
+                                                            "permissionName":  "Admin MVP Permission 83af0e19 (updated)",
+                                                            "description":  "CCM administration MVP validation permission",
+                                                            "status":  "ACTIVE",
+                                                            "createdAt":  "2026-06-07 22:15:56",
+                                                            "updatedAt":  "2026-06-07 22:15:58"
+                                                        },
+                                           "correlationId":  "5d392b7e-171c-4fc8-bab0-b0b721e82da3"
                                        },
                   "assignPermissionToRole":  {
                                                  "status":  204,
-                                                 "correlationId":  "ae6f9e75-ff66-492a-aed5-6c6b47f36fd1"
+                                                 "correlationId":  "b51c5259-af41-4b25-a57f-111c29c268bb"
                                              },
                   "updateUser":  {
                                      "response":  {
-                                                      "userId":  "c2e331b9-8f62-41f0-bc05-e249d582543a",
-                                                      "username":  "admin.mvp.0e7634ad",
-                                                      "displayName":  "Admin MVP User 0e7634ad (updated)",
-                                                      "email":  "admin.mvp.0e7634ad@example.test",
+                                                      "userId":  "a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd",
+                                                      "username":  "admin.mvp.83af0e19",
+                                                      "displayName":  "Admin MVP User 83af0e19 (updated)",
+                                                      "email":  "admin.mvp.83af0e19@example.test",
                                                       "status":  "ACTIVE",
-                                                      "createdAt":  "2026-06-07 22:12:11",
-                                                      "updatedAt":  "2026-06-07 22:12:20"
+                                                      "createdAt":  "2026-06-07 22:15:43",
+                                                      "updatedAt":  "2026-06-07 22:15:52"
                                                   },
-                                     "correlationId":  "3f955556-97da-4099-8f42-83d251b9f185"
+                                     "correlationId":  "81b9dc23-1d24-4675-8c63-88f3257703bc"
                                  },
                   "createPermission":  {
                                            "response":  {
-                                                            "permissionId":  "8bf89f69-f515-41b1-8a5a-7c653ebeafe7",
-                                                            "permissionCode":  "admin.mvp.0e7634ad",
-                                                            "permissionName":  "Admin MVP Permission 0e7634ad",
+                                                            "permissionId":  "1f9dc8e6-1ee3-4633-9180-81a4228b54db",
+                                                            "permissionCode":  "admin.mvp.83af0e19",
+                                                            "permissionName":  "Admin MVP Permission 83af0e19",
                                                             "description":  "CCM administration MVP validation permission",
                                                             "status":  "ACTIVE",
-                                                            "createdAt":  "2026-06-07 22:12:25",
-                                                            "updatedAt":  "2026-06-07 22:12:25"
+                                                            "createdAt":  "2026-06-07 22:15:56",
+                                                            "updatedAt":  "2026-06-07 22:15:56"
                                                         },
-                                           "correlationId":  "26d1092e-7a3b-4340-a31c-786ade26945b"
+                                           "correlationId":  "9ab9e34b-3a7c-46d2-87f5-339077cc8b99"
                                        },
                   "createUser":  {
                                      "response":  {
-                                                      "userId":  "c2e331b9-8f62-41f0-bc05-e249d582543a",
-                                                      "username":  "admin.mvp.0e7634ad",
-                                                      "displayName":  "Admin MVP User 0e7634ad",
-                                                      "email":  "admin.mvp.0e7634ad@example.test",
+                                                      "userId":  "a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd",
+                                                      "username":  "admin.mvp.83af0e19",
+                                                      "displayName":  "Admin MVP User 83af0e19",
+                                                      "email":  "admin.mvp.83af0e19@example.test",
                                                       "status":  "PENDING",
-                                                      "createdAt":  "2026-06-07 22:12:11",
-                                                      "updatedAt":  "2026-06-07 22:12:11"
+                                                      "createdAt":  "2026-06-07 22:15:43",
+                                                      "updatedAt":  "2026-06-07 22:15:43"
                                                   },
-                                     "correlationId":  "bb716d22-1dbd-4114-aed1-e37865faed4e"
+                                     "correlationId":  "24c5e42f-05ce-4981-9beb-5983b83a6053"
                                  }
               },
-    "runCorrelationId":  "a8ff660e-05aa-4b23-87b4-0360c12f34e9",
-    "capturedAt":  "2026-06-07T22:12:17.8679425Z"
+    "runCorrelationId":  "ef34ae69-498a-40c2-9700-8bb8de980f6e",
+    "capturedAt":  "2026-06-07T22:15:50.9610938Z"
 }
