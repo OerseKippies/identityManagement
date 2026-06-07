@@ -138,6 +138,40 @@ Result: **FAIL** — production MariaDB user/database not provisioned on Versio.
 
 commL production health contract path: `/api/health.php`.
 
+## Phase 9 Finalization (2026-06-07)
+
+Re-validation after PAEP finalization task (`PHASE9-IDM-FINALIZATION`):
+
+| Check | Result |
+|---|---|
+| DNS | PASS |
+| Versio deployment / PHP runtime | PASS |
+| `GET /health` | PASS (200) |
+| commL `/api/health.php` | PASS (200) |
+| `php test-db.php` | FAIL — `Access denied for user 'nol_module_idm'@'localhost'` |
+| `php scripts/migrate.php` | FAIL — same PDO 1045 |
+| `GET /v1/identity/users` (users.list) | FAIL (500) |
+| `POST /v1/identity/actor-context` (actorContext) | FAIL (500) |
+| TLS hostname certificate | DEFERRED open finding |
+
+Endpoint sweep (`scripts/phase9_validate_endpoints.sh` on Versio):
+
+```text
+GET /health: PASS (200)
+GET /v1/identity/users (users.list): FAIL (500)
+POST /v1/identity/actor-context (actorContext): FAIL (500)
+commL /api/health.php: PASS (200)
+SUMMARY pass=2 fail=2
+```
+
+**Root cause:** server `config/config.php` still uses placeholder secrets; `config/env.versio` missing. HTTP 500 on data endpoints is `Database connection failed` before controller/repository execution.
+
+**Fix shipped (repo):** `Config::mergeVersioEnv()`, `config/env.versio.example`, `scripts/sync_versio_env.php`.
+
+**Operator unblock:** populate `config/env.versio` with DirectAdmin `nol_module_idm` password, re-run migrate + validation.
+
+Readiness package: `runtime/evidence/PHASE9-IDM-READINESS.md`
+
 ## Acceptance Criteria Summary
 
 | Criterion | Result |
@@ -160,11 +194,10 @@ Commit: c6e240332fdaa1aaa94fab97c4fdb2b7a9970827
 
 ## Blockers
 
-1. **TLS** — Issue Let’s Encrypt / hostname certificate for `idm.oerse-kippies.nl` in Versio DirectAdmin (current cert is `*.axc.eu`).
-2. **Database** — Create MariaDB database and user `nol_module_idm` in DirectAdmin; set credentials in server-side `config/config.php`.
-3. **Migrations** — Run `php scripts/migrate.php` after DB provisioning.
-4. **Secrets** — Replace placeholder `api.api_key` and database password on server.
-5. **commL routing** — Update `routes/routes.json` idM `baseUrl` from `http://127.0.0.1:18083` to production HTTPS URL after TLS + DB PASS.
+1. **Runtime config** — Populate `config/env.versio` on Versio with valid `IDM_DB_PASSWORD` and `IDM_API_KEY` (config.php still placeholder-identical to example).
+2. **Migrations** — Run `php scripts/migrate.php` after env.versio is applied.
+3. **TLS (DEFERRED)** — Issue hostname certificate for `idm.oerse-kippies.nl` (current CN=`*.axc.eu`); tracked as open finding, not a govM readiness blocker.
+4. **commL routing** — Update idM `baseUrl` in commL routes after runtime endpoints PASS.
 
 ## Required Next Action
 
@@ -176,4 +209,4 @@ Commit: c6e240332fdaa1aaa94fab97c4fdb2b7a9970827
 
 ## Eindconclusie
 
-DNS resolves and the idM PHP runtime is partially deployed on Versio (`/health` returns 200). Production acceptance **FAILS** because the TLS certificate is not valid for the production hostname, MariaDB is not provisioned, and data endpoints (`users.list`, `actorContext`) return HTTP 500. Deployment status: **FAILED**.
+DNS resolves and idM PHP runtime is deployed on Versio (`/health` and commL health PASS). Data endpoints fail HTTP 500 because runtime MariaDB credentials are not configured (`config/env.versio` missing; placeholder password in config.php). govM readiness: **NOT READY** until env.versio is applied. TLS remains a deferred open finding.

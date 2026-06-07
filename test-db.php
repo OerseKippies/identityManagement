@@ -6,7 +6,7 @@ use IdM\Autoloader;
 use IdM\Infrastructure\Config;
 use IdM\Infrastructure\Database;
 
-$rootDir = __DIR__ . '/..';
+$rootDir = __DIR__;
 
 require $rootDir . '/src/Autoloader.php';
 Autoloader::register($rootDir . '/src');

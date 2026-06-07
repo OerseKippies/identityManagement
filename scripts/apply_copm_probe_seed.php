@@ -11,13 +11,7 @@ $rootDir = dirname(__DIR__);
 require $rootDir . '/src/Autoloader.php';
 Autoloader::register($rootDir . '/src');
 
-$configPath = $rootDir . '/config/config.php';
-if (!is_file($configPath)) {
-    fwrite(STDERR, "Missing config/config.php\n");
-    exit(1);
-}
-
-$config = Config::load($configPath);
+$config = Config::load(Config::resolvePath($rootDir));
 $pdo = (new Database($config))->pdo();
 $migrationId = '002_copm_probe_seed';
 
