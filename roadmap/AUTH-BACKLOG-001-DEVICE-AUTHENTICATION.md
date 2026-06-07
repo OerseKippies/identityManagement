@@ -121,5 +121,5 @@ idM must not delegate device trust truth to copM or foreign modules.
 | Field | Value |
 |---|---|
 | File | `roadmap/AUTH-BACKLOG-001-DEVICE-AUTHENTICATION.md` |
-| Commit | (recorded after push) |
+| Commit | `0c5357d` |
 | Repository | https://github.com/OerseKippies/identityManagement |
