@@ -4,7 +4,7 @@ Date: 2026-06-07
 Module: identityManagement (idM)  
 Classification: Runtime — Identity Administration MVP  
 Authority: OerseKippies/OK-Core/START-HERE.md  
-Status: **APPROVED WITH CONDITIONS**
+Status: **APPROVED**
 
 ---
 
@@ -12,7 +12,8 @@ Status: **APPROVED WITH CONDITIONS**
 
 Identity administration MVP enables operators to create and manage users, roles, permissions, and RBAC assignments through idM v1 API endpoints. Administratively created users resolve through the existing actor-context login flow (`subjectHint` = user UUID) and appear in copM user picker after enable.
 
-Production validation captured 12 of 14 steps PASS; two new endpoints (`PATCH /v1/permissions`, `GET /v1/audit-log`) require Versio deploy of this commit.
+**Deployed to Versio:** `d5099f3` @ https://idm.oerse-kippies.nl  
+**Post-deploy validation:** 15/15 PASS
 
 ---
 
@@ -41,11 +42,24 @@ Production validation captured 12 of 14 steps PASS; two new endpoints (`PATCH /v
 4. POST /v1/permissions    → create permission (optional)
 5. POST /v1/users/{id}/roles/{roleId}           → assign role
 6. POST /v1/roles/{roleId}/permissions/{permId} → assign permission
-7. copM user picker        → lists ACTIVE users via idM.users.list.v1
+7. copM user picker        → lists users via idM.users.list.v1
 8. Login                   → subjectHint = userId UUID
 ```
 
 Direct API access requires `X-Api-Key`. commL mediation bypasses API key for registered contracts only (login paths).
+
+---
+
+## Deploy Record
+
+| Field | Value |
+|---|---|
+| Host | vserver423.axc.eu (Versio) |
+| Path | `~/domains/idm.oerse-kippies.nl/identityManagement` |
+| Commit | `d5099f3` |
+| Method | `git fetch && git reset --hard origin/main` |
+| Migration | `001_initial_schema already applied` |
+| Validated | `scripts/idm_administration_mvp_validate.ps1` — 15/15 PASS |
 
 ---
 
@@ -58,13 +72,6 @@ Direct API access requires `X-Api-Key`. commL mediation bypasses API key for reg
 | Login method (updated) | `runtime/evidence/IDM-CURRENT-LOGIN-METHOD.md` |
 | Review | `reviews/REVIEW-IDM-ADMINISTRATION-MVP.md` |
 | Validation script | `scripts/idm_administration_mvp_validate.ps1` |
-
----
-
-## Conditions for Full Closure
-
-1. Deploy this commit to Versio (`idm.oerse-kippies.nl`).
-2. Re-run validation script; confirm PATCH permission and GET audit-log return HTTP 200.
 
 ---
 
@@ -88,6 +95,6 @@ idM does not own canonical identity, identity mapping, or cross-domain identity 
 ## Review Decision
 
 ```text
-APPROVED WITH CONDITIONS
+APPROVED
 Review Status: PASS
 ```

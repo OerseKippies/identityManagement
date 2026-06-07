@@ -35,10 +35,10 @@ Operational identity administration is implemented and verified on production fo
 |---|---|---|
 | Users CRUD + lifecycle | `POST/GET/PATCH /v1/users`, `/enable`, `/disable`, `/lock`, `/unlock` | PASS (production) |
 | Roles CRUD + disable | `POST/GET/PATCH /v1/roles`, `/disable` | PASS (production) |
-| Permissions CRUD | `POST/GET/PATCH /v1/permissions` | PATCH in repo; deploy pending |
+| Permissions CRUD | `POST/GET/PATCH /v1/permissions` | PASS (production) |
 | Assignments | `POST/DELETE /v1/users/{id}/roles/{id}`, `/v1/roles/{id}/permissions/{id}` | PASS (production) |
-| Audit on mutations | `idm_audit_log` via `AuditLogger` | PASS (writes verified) |
-| Audit query | `GET /v1/audit-log?correlationId=` | In repo; deploy pending |
+| Audit on mutations | `idm_audit_log` via `AuditLogger` | PASS (production) |
+| Audit query | `GET /v1/audit-log?correlationId=` | PASS (production) |
 | Correlation | `X-Correlation-Id` on all responses | PASS (production) |
 | Login enablement | `POST /v1/identity/actor-context` with `subjectHint` UUID | PASS (new user) |
 
@@ -177,23 +177,29 @@ Audit action: `ASSIGN_PERMISSION` on entity `Role` with `detailsJson.permissionI
 
 ## Audit Record Example
 
-Mutation correlation from user create: `bb716d22-1dbd-4114-aed1-e37865faed4e`
+Mutation correlation from user create: `ec37a4be-60ce-485c-bed0-2aa58c4546fe`
 
-Expected row in `idm_audit_log` (written by `AuditLogger` on `CREATE_USER`):
+**Query:** `GET /v1/audit-log?correlationId=ec37a4be-60ce-485c-bed0-2aa58c4546fe`
+
+**Response (HTTP 200):**
 
 ```json
 {
-  "entityType": "User",
-  "entityId": "c2e331b9-8f62-41f0-bc05-e249d582543a",
-  "action": "CREATE_USER",
-  "actorType": "SYSTEM",
-  "actorId": null,
-  "correlationId": "bb716d22-1dbd-4114-aed1-e37865faed4e",
-  "detailsJson": { "username": "admin.mvp.0e7634ad" }
+  "items": [
+    {
+      "auditId": "83a5a335-ca37-43e9-a4f2-d27080825c64",
+      "entityType": "User",
+      "entityId": "ac851695-33d7-454d-97b0-a448d7575f5f",
+      "action": "CREATE_USER",
+      "actorType": "SYSTEM",
+      "actorId": null,
+      "correlationId": "ec37a4be-60ce-485c-bed0-2aa58c4546fe",
+      "timestamp": "2026-06-07 22:18:02",
+      "detailsJson": "{\"username\":\"admin.mvp.96d24acb\"}"
+    }
+  ]
 }
 ```
-
-Query after deploy: `GET /v1/audit-log?correlationId=bb716d22-1dbd-4114-aed1-e37865faed4e`
 
 ---
 
@@ -273,12 +279,16 @@ Requires `IDM_API_KEY` (env or `config/env.versio`, never committed).
 
 ---
 
-## Post-Deploy Verification
+## Versio Deploy
 
-After Versio deploy of this commit, re-run validation to confirm:
+| Step | Result | Detail |
+|---|---|---|
+| Git push | PASS | `d5099f3` on `origin/main` |
+| Versio pull | PASS | `~/domains/idm.oerse-kippies.nl/identityManagement` @ `d5099f3` |
+| Migration | PASS | `001_initial_schema already applied` |
+| Post-deploy validation | PASS | 15/15 steps (`idm_administration_mvp_validate.ps1`) |
 
-- `PATCH /v1/permissions/{permissionId}` — HTTP 200
-- `GET /v1/audit-log?correlationId=` — HTTP 200 with audit items
+Deployed: 2026-06-07T22:18 UTC
 
 ---
 
@@ -288,5 +298,6 @@ After Versio deploy of this commit, re-run validation to confirm:
 |---|---|
 | File | `runtime/evidence/IDM-ADMINISTRATION-MVP.md` |
 | Capture | `runtime/evidence/idm-administration-mvp-capture.json` |
-| Commit | (recorded after push) |
+| Commit | `d5099f3` |
+| Deploy SHA | `d5099f3` |
 | Repository | https://github.com/OerseKippies/identityManagement |
