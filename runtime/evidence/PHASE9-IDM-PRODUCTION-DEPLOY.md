@@ -213,7 +213,7 @@ Result: SUCCESS
 Deployment: COMPLETE (runtime readiness)
 Readiness: READY
 Production URL: https://idm.oerse-kippies.nl
-Commit: pending retest commit
+Commit: d23f1f6d3b5400e6aa98f50d3c850347b281c4f1
 ```
 
 ## Open Findings
