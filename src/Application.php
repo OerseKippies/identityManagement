@@ -23,6 +23,7 @@ use IdM\Infrastructure\Clock;
 use IdM\Infrastructure\Config;
 use IdM\Infrastructure\Correlation;
 use IdM\Infrastructure\Database;
+use IdM\Infrastructure\Uuid;
 use IdM\Repository\AccessPolicyRepository;
 use IdM\Repository\AssignmentRepository;
 use IdM\Repository\PermissionRepository;
@@ -216,6 +217,23 @@ final class Application
             $permissionService->get($params['permissionId']),
             $request->correlationId
         ));
+        $router->add('PATCH', '/v1/permissions/(?P<permissionId>[0-9a-f-]{36})', fn (Request $request, array $params): Response => Response::json(
+            200,
+            $permissionService->update($params['permissionId'], $request->body ?? [], $actor($request), $request->correlationId),
+            $request->correlationId
+        ));
+
+        $auditRepository = new AuditRepository($this->database);
+        $router->add('GET', '/v1/audit-log', function (Request $request) use ($auditRepository): Response {
+            $correlationFilter = isset($request->query['correlationId'])
+                ? trim((string) $request->query['correlationId'])
+                : '';
+            if ($correlationFilter === '' || !Uuid::isValid($correlationFilter)) {
+                throw new ApiException('VALIDATION_ERROR', 'correlationId query parameter is required and must be a valid UUID', 400);
+            }
+
+            return Response::json(200, ['items' => $auditRepository->findByCorrelationId(strtolower($correlationFilter))], $request->correlationId);
+        });
 
         $router->add('POST', '/v1/users/(?P<userId>[0-9a-f-]{36})/roles/(?P<roleId>[0-9a-f-]{36})', function (Request $request, array $params) use ($assignmentService, $actor): Response {
             $assignmentService->assignRoleToUser($params['userId'], $params['roleId'], $actor($request), $request->correlationId);

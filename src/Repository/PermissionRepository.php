@@ -43,4 +43,18 @@ final class PermissionRepository
                 VALUES (:permissionId, :permissionCode, :permissionName, :description, :status, :createdAt, :updatedAt)';
         $this->database->pdo()->prepare($sql)->execute($data);
     }
+
+    /** @param array<string, mixed> $data */
+    public function update(string $permissionId, array $data): void
+    {
+        $fields = [];
+        $params = ['permissionId' => $permissionId];
+        foreach ($data as $key => $value) {
+            $fields[] = $key . ' = :' . $key;
+            $params[$key] = $value;
+        }
+
+        $sql = 'UPDATE idm_permissions SET ' . implode(', ', $fields) . ' WHERE permissionId = :permissionId';
+        $this->database->pdo()->prepare($sql)->execute($params);
+    }
 }

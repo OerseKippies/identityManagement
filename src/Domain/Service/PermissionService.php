@@ -76,4 +76,44 @@ final class PermissionService
     {
         return $this->permissions->findAll();
     }
+
+    /** @param array<string, mixed> $payload */
+    public function update(string $permissionId, array $payload, ActorContext $actor, string $correlationId): array
+    {
+        $permission = $this->get($permissionId);
+        if ((string) $permission['status'] === 'DISABLED') {
+            throw new ApiException('VALIDATION_ERROR', 'disabled permission cannot be updated', 400);
+        }
+
+        $updates = [];
+        $details = [];
+        foreach (['permissionName', 'description'] as $field) {
+            if (array_key_exists($field, $payload)) {
+                $value = trim((string) $payload[$field]);
+                if ($field === 'permissionName' && $value === '') {
+                    throw new ApiException('VALIDATION_ERROR', 'permissionName cannot be empty', 400);
+                }
+                $updates[$field] = $value === '' ? null : $value;
+                $details[$field] = $updates[$field];
+            }
+        }
+
+        if ($updates === []) {
+            throw new ApiException('VALIDATION_ERROR', 'no updatable fields provided', 400);
+        }
+
+        $updates['updatedAt'] = $this->clock->nowUtc();
+
+        $this->database->beginTransaction();
+        try {
+            $this->permissions->update($permissionId, $updates);
+            $this->audit->log('Permission', $permissionId, 'UPDATE_PERMISSION', $actor, $correlationId, $details);
+            $this->database->commit();
+        } catch (\Throwable $exception) {
+            $this->database->rollBack();
+            throw $exception;
+        }
+
+        return $this->get($permissionId);
+    }
 }

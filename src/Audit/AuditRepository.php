@@ -53,4 +53,18 @@ final class AuditRepository
 
         return (int) ($row['total'] ?? 0);
     }
+
+    /** @return list<array<string, mixed>> */
+    public function findByCorrelationId(string $correlationId): array
+    {
+        $statement = $this->database->pdo()->prepare(
+            'SELECT auditId, entityType, entityId, action, actorType, actorId, correlationId, timestamp, detailsJson
+             FROM idm_audit_log
+             WHERE correlationId = :correlationId
+             ORDER BY timestamp ASC'
+        );
+        $statement->execute(['correlationId' => $correlationId]);
+
+        return $statement->fetchAll();
+    }
 }

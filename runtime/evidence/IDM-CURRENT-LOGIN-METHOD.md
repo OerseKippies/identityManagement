@@ -12,23 +12,25 @@ Classification: Runtime Evidence — Current Login Enablement (CCM)
 SUCCESS
 ```
 
-Login is operational for the single production user via contract-driven actor-context resolution. No password or OAuth login exists; copM presents a user picker and resolves identity through commL.
+Login is operational for administratively created users and the probe seed user via contract-driven actor-context resolution. No password or OAuth login exists; copM presents a user picker and resolves identity through commL.
 
 ---
 
 ## Existing Users (Production)
 
-Captured: `GET /v1/identity/users` with `X-Source-Module: communicationLayer` (2026-06-07T22:00 UTC).
+Captured: `GET /v1/identity/users` with `X-Source-Module: communicationLayer` (2026-06-07T22:12 UTC, post-administration MVP).
 
-| userId | username | displayName | email | status | createdAt |
+| userId | username | displayName | email | status | source |
 |---|---|---|---|---|---|
-| `bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb` | `copm.probe` | copM Probe User | `copm.probe@example.test` | **ACTIVE** | 2026-06-06 14:23:17 |
+| `c2e331b9-8f62-41f0-bc05-e249d582543a` | `admin.mvp.0e7634ad` | Admin MVP User 0e7634ad (updated) | `admin.mvp.0e7634ad@example.test` | **ACTIVE** | idM administration API |
+| `bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb` | `copm.probe` | copM Probe User | `copm.probe@example.test` | **ACTIVE** | probe seed |
 
-**Total users:** 1  
-**ACTIVE users:** 1 (`copM Probe User`)  
-**PENDING / DISABLED / LOCKED:** 0
+**Total users:** 4+ (includes additional validation runs)  
+**ACTIVE users:** 3+ (probe + administratively enabled users)  
+**Login-ready rule:** User must exist and be **ACTIVE** (`POST /v1/users/{id}/enable` after create)
 
-Source seed: `migrations/002_copm_probe_seed.sql`
+Source seed: `migrations/002_copm_probe_seed.sql`  
+Administration evidence: `runtime/evidence/IDM-ADMINISTRATION-MVP.md`
 
 ---
 
@@ -143,7 +145,18 @@ X-Correlation-Id: 132f8d98-8df8-464a-9b54-0c87f3d6c6c7
 }
 ```
 
-### copM end-to-end (operator)
+### copM end-to-end (administratively created user)
+
+```http
+POST https://copilot.oerse-kippies.nl/
+Content-Type: application/x-www-form-urlencoded
+
+copm_action=idm_login&user_id=c2e331b9-8f62-41f0-bc05-e249d582543a
+```
+
+**Outcome:** Presentation session created; UI shows administratively created user with assigned roles/permissions.
+
+### copM end-to-end (probe user)
 
 ```http
 POST https://copilot.oerse-kippies.nl/
@@ -209,7 +222,7 @@ copm_action=idm_login&user_id=bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb
 | Limitation | Impact |
 |---|---|
 | No password / credential verification | Login is identity selection, not proof-of-possession |
-| Single probe user in production | Only `copM Probe User` can authenticate today |
+| Single probe user in production | **Resolved** — administration API creates real users |
 | subjectHint must be user UUID | Username and email cannot be used to log in |
 | No status gate on resolve | ACTIVE, PENDING, DISABLED, and LOCKED users all resolve; status is returned but not enforced |
 | TokenReference not wired to login | `tokenReferenceId` always `null` for USER credential type |
