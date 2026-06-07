@@ -1,0 +1,10 @@
+=== Initial Administrator Verification 2026-06-08T01:04:36.4803272+02:00 ===
+PASS: admin user ACTIVE
+PASS: admin actor context has admin role
+PASS: probe user has no admin privileges
+PASS: administration access via idM.users.list.v1
+PASS: administration access via idM.roles.list.v1
+PASS: administration access via idM.permissions.list.v1
+
+Failures: 0
+ALL CHECKS PASSED

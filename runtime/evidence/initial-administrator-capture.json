@@ -1,0 +1,46 @@
+﻿{
+    "adminRoleId":  "20d7ca05-27ed-43c0-ae7d-71da5fc27e94",
+    "probeActorContext":  {
+                              "actorType":  "USER",
+                              "actorId":  "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+                              "displayName":  "copM Probe User",
+                              "status":  "ACTIVE",
+                              "roles":  [
+
+                                        ],
+                              "permissions":  [
+
+                                              ],
+                              "tokenReferenceId":  null,
+                              "correlationId":  "4b29903f-7fa6-4b10-8073-58df1c4498e5"
+                          },
+    "createdAt":  "2026-06-07T23:04:21.3014365Z",
+    "adminActorContext":  {
+                              "actorType":  "USER",
+                              "actorId":  "7300b60c-7387-435d-baee-bd8e836e7f93",
+                              "displayName":  "Platform Administrator",
+                              "status":  "ACTIVE",
+                              "roles":  [
+                                            "admin"
+                                        ],
+                              "permissions":  [
+                                                  "copm.admin",
+                                                  "copm.diagnostics.view",
+                                                  "copm.identity.admin",
+                                                  "copm.operator"
+                                              ],
+                              "tokenReferenceId":  null,
+                              "correlationId":  "cb11daf6-aa49-4bbe-972c-e49ed7d829b4"
+                          },
+    "roleCode":  "admin",
+    "displayName":  "Platform Administrator",
+    "username":  "admin",
+    "adminUserId":  "7300b60c-7387-435d-baee-bd8e836e7f93",
+    "permissions":  [
+                        "copm.identity.admin",
+                        "copm.diagnostics.view",
+                        "copm.admin",
+                        "copm.operator"
+                    ],
+    "email":  "admin@oerse-kippies.nl"
+}

@@ -1,0 +1,47 @@
+=== Initial Administrator Creation 2026-06-08T01:04:16.8965574+02:00 ===
+Path: copM consumer -> commL -> idM
+commL: https://comml.oerse-kippies.nl
+
+--- Current production authorization model ---
+Users in idM: 9
+  user: copm.admin.295d830b | copM Admin Updated 295d830b | DISABLED | a494a5fe-58ca-487f-8eca-e53ddc7769f9
+  user: copm.admin.7c688dd1 | copM Admin Updated 7c688dd1 | ACTIVE | e800dfc6-f0a0-4703-b6ca-fc4978566522
+  user: copm.admin.e0410958 | copM Admin Updated e0410958 | ACTIVE | 4edb2970-af3c-49e8-8354-311e11dd8792
+  user: admin.mvp.96d24acb | Admin MVP User 96d24acb (updated) | ACTIVE | ac851695-33d7-454d-97b0-a448d7575f5f
+  user: admin.mvp.83af0e19 | Admin MVP User 83af0e19 (updated) | ACTIVE | a9eeb0fc-5ec8-4a1e-b3dc-3920464d24cd
+  user: admin.mvp.0e7634ad | Admin MVP User 0e7634ad (updated) | DISABLED | c2e331b9-8f62-41f0-bc05-e249d582543a
+  user: admin.mvp.2abce015 | Admin MVP User 2abce015 (updated) | ACTIVE | eee419ad-803f-4763-a062-a2fba0f8d977
+  user: admin.mvp.916c5204 | Admin MVP User 916c5204 | PENDING | 2ae97676-371a-48b5-b7b4-54272d1b5e20
+  user: copm.probe | copM Probe User | ACTIVE | bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb
+Probe user verified: copM Probe User (bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb)
+Created admin user: 7300b60c-7387-435d-baee-bd8e836e7f93
+Admin user enabled to ACTIVE
+Created admin role: 20d7ca05-27ed-43c0-ae7d-71da5fc27e94
+Created permission: copm.identity.admin
+Assigned permission copm.identity.admin to admin role
+Created permission: copm.diagnostics.view
+Assigned permission copm.diagnostics.view to admin role
+Created permission: copm.admin
+Assigned permission copm.admin to admin role
+Created permission: copm.operator
+Assigned permission copm.operator to admin role
+Assigned admin role to admin user
+
+--- Admin actor context ---
+  actorType: USER
+  roles: admin
+  permissions: copm.admin, copm.diagnostics.view, copm.identity.admin, copm.operator
+
+--- Probe actor context ---
+  actorType: USER
+  roles: (none)
+  permissions: (none)
+Administration list OK: idM.users.list.v1
+Administration list OK: idM.roles.list.v1
+Administration list OK: idM.permissions.list.v1
+
+RESULT: SUCCESS
+adminUserId=7300b60c-7387-435d-baee-bd8e836e7f93
+adminRoleId=20d7ca05-27ed-43c0-ae7d-71da5fc27e94
+loginIdentifier=admin (or admin@oerse-kippies.nl)
+Capture: D:\Documents\Prive\Kip\GitHub\identityManagement\runtime\evidence\initial-administrator-capture.json
