@@ -11,11 +11,7 @@ $rootDir = dirname(__DIR__);
 require $rootDir . '/src/Autoloader.php';
 Autoloader::register($rootDir . '/src');
 
-$configPath = $rootDir . '/config/config.php';
-if (!is_file($configPath)) {
-    fwrite(STDERR, "Missing config/config.php. Copy config.example.php first.\n");
-    exit(1);
-}
+$configPath = Config::resolvePath($rootDir);
 
 $config = Config::load($configPath);
 $database = new Database($config);

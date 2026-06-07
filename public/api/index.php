@@ -5,6 +5,7 @@ declare(strict_types=1);
 use IdM\Application;
 use IdM\Autoloader;
 use IdM\Http\Request;
+use IdM\Infrastructure\Config;
 use IdM\Infrastructure\Correlation;
 
 $rootDir = dirname(__DIR__, 2);
@@ -12,10 +13,7 @@ $rootDir = dirname(__DIR__, 2);
 require $rootDir . '/src/Autoloader.php';
 Autoloader::register($rootDir . '/src');
 
-$configPath = $rootDir . '/config/config.php';
-if (!is_file($configPath)) {
-    $configPath = $rootDir . '/config/config.example.php';
-}
+$configPath = Config::resolvePath($rootDir);
 
 $correlationId = Correlation::resolve($_SERVER['HTTP_X_CORRELATION_ID'] ?? null);
 $request = Request::fromGlobals($correlationId);
